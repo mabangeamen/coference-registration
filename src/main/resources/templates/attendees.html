@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head  lang="en">
+
+    <title>List Attendees</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link href="../static/spring-core.css"
+          th:href="@{spring-core.css}" rel="stylesheet" media="screen"/>
+</head>
+<body>
+
+<div class="container">
+    <div th:if="${not #lists.isEmpty(attendees)}">
+        <h2> Attendee List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Surname</th>
+                <th>Name</th>
+                <th>cellName</th>
+                <th>wpsMember</th>
+                <th>emailAdderess</th>
+                <th>contactNumber</th>
+                <th>location</th>
+                <th>specialCondition</th>
+            </tr>
+            <tr th:each="attendee : ${attendees}">
+                <td th:text="${attendee.id}"></td>
+                <td th:text="${attendee.title}"></td>
+                <td th:text="${attendee.surname}"></td>
+                <td th:text="${attendee.name}"></td>
+                <td th:text="${attendee.cellName}"></td>
+                <td th:text="${attendee.wpsMember}"></td>
+                <td th:text="${attendee.emailAdderess}"></td>
+                <td th:text="${attendee.contactNumber}"></td>
+                <td th:text="${attendee.location}"></td>
+                <td th:text="${attendee.specialCondition}"></td>
+                <td><a th:href="${'/attendee/' + attendee.id}">View</a> </td>
+                <td><a th:href="${'/attendee/edit/'+ attendee.id}">Edit</a></td>
+                <td><a th:href="${'/attendee/delete/'+ attendee.id}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <a href="/attendee/new">New Attendee</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

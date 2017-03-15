@@ -1,6 +1,7 @@
 package springboot.project.services;
 
 import org.springframework.stereotype.Service;
+import springboot.project.domain.Attendee;
 import springboot.project.domain.Product;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ import java.util.*;
 @Service
 public class ProductServiceImpl implements ProductService{
     private Map<Integer,Product> products;
-
+    private Map<Integer, Attendee> attendees;
     public ProductServiceImpl() {
         loadProducts();
     }
@@ -45,6 +46,25 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void deleteProduct(Integer id) {
         products.remove(id);
+    }
+
+    @Override
+    public Attendee saveOrUpdateAttendee(Attendee attendee) {
+        if (attendee != null) {
+            if (attendee.getId() == null) {
+                attendee.setId(getNextKey());
+            }
+
+            attendees.put(attendee.getId(), attendee);
+            return attendee;
+        } else {
+            throw new RuntimeException("Attendee Can't be null");
+        }
+    }
+
+    @Override
+    public List<Attendee> listAllAttendees() {
+        return new ArrayList<>(attendees.values());
     }
 
     private  Integer getNextKey(){
@@ -96,7 +116,34 @@ public class ProductServiceImpl implements ProductService{
 
         products.put(5,product5);
 
+        attendees = new HashMap<>();
 
+        Attendee attendee1 = new Attendee();
+        attendee1.setId(1);
+        attendee1.setCellName("Wps Benoni");
+        attendee1.setContactNumber("0715596518");
+        attendee1.setEmailAdderess("mabangeamen@gmail.com");
+        attendee1.setLocation("Johannesburg");
+        attendee1.setName("Amen");
+        attendee1.setSpecialCondition("Miracles Healing");
+        attendee1.setSurname("Mabange");
+        attendee1.setWpsMember(1);
+
+        attendees.put(1, attendee1);
+
+        Attendee attendee2 = new Attendee();
+        attendee2.setId(2);
+        attendee2.setId(1);
+        attendee2.setCellName("Wps lakeside");
+        attendee2.setContactNumber("08134596518");
+        attendee2.setEmailAdderess("john@gmail.com");
+        attendee2.setLocation("Benoni");
+        attendee2.setName("James");
+        attendee2.setSpecialCondition("Miracles Healing");
+        attendee2.setSurname("Johnson");
+        attendee2.setWpsMember(1);
+
+        attendees.put(2, attendee2);
     }
 
 }

@@ -60,16 +60,28 @@ private ProductService productService;
          return  "redirect:/products/";
 
      }
-    @RequestMapping("/registration/new")
+    @RequestMapping("/attendee/new")
     public String register(Model model) {
-         model.addAttribute("attendee", new Attendee());
-        return  "conferenceregistration";
+        model.addAttribute("attendee", new Attendee());
+        return  "attendeeform";
 
+    }
+
+    @RequestMapping(value = "/attendee", method = RequestMethod.POST)
+    public String saveOrUpdateProduct(Attendee attendee){
+        Attendee savedProduct= productService.saveOrUpdateAttendee(attendee);
+        return  "redirect:/attendee/"+ savedProduct.getId();
     }
     @RequestMapping("/congratulations")
     public String congratulations(@PathVariable Integer id) {
         productService.deleteProduct(id);
         return  "congratulations";
 
+    }
+
+    @RequestMapping("/attendees")
+    public  String listAttendees(Model model) {
+        model.addAttribute("attendee",productService.listAllAttendees());
+        return "attendees";
     }
 }
